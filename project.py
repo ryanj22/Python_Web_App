@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, jsonify
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from database_setup import Base, Parameter
+from database import Base, Parameter
 
 import sys
 from lxml import etree
@@ -24,11 +24,11 @@ xCoords = tree.xpath('ns:Block/ns:BlockDef/ns:Coord', namespaces = nsmap)
 
 for xConfig in xConfigs:
     for ChildNode in xConfig.getchildren():
-        if ChildNode.tag.split('}', 1)[1] <> "Coord":
+        if ChildNode.tag.split('}', 1)[1] != "Coord":
             #print(tagname, tagname, ChildNode.tag.split('}', 1)[1], ChildNode.text)
             newParam = Parameter(tagname = tagname, blockname = tagname, blocktype = "", paramname = ChildNode.tag.split('}', 1)[1], paramvalue = ChildNode.text, paramtype = "")
             session.add(newParam)
-            
+
 for xCoord in xCoords:
         for ChildNode in xCoord.getchildren():
             xParamType = ChildNode.tag.split('}', 1)[1]
@@ -74,11 +74,11 @@ for xBlock in xBlocks:
 
     for xConfig in xConfigs:
         for ChildNode in xConfig.getchildren():
-            if ChildNode.tag.split('}', 1)[1] <> "Coord":
+            if ChildNode.tag.split('}', 1)[1] != "Coord":
                 #print(tagname, block, ChildNode.tag.split('}', 1)[1], ChildNode.text)
                 newParam = Parameter(tagname = tagname, blockname = block, blocktype = "", paramname = ChildNode.tag.split('}', 1)[1], paramvalue = ChildNode.text, paramtype = "")
                 session.add(newParam)
-                        
+
     for xCoord in xCoords:
         for ChildNode in xCoord.getchildren():
             xParamType = ChildNode.tag.split('}', 1)[1]
@@ -93,7 +93,7 @@ for xBlock in xBlocks:
                 #print(tagname, block, "Coord", "L=" + xS1 + ",T=" + xS2 + ",R=" + xS3 + ",B=" + xS4 )
                 newParam = Parameter(tagname = tagname, blockname = block, blocktype = "", paramname = "Coord", paramvalue = "L=" + xS1 + ",T=" + xS2 + ",R=" + xS3 + ",B=" + xS4, paramtype = "")
                 session.add(newParam)
-                
+
     for xParameter in xParameters:
         for ChildNode in xParameter.getchildren():
             xParamType = ChildNode.tag.split('}', 1)[1]
@@ -141,8 +141,3 @@ for xBlock in xBlocks:
 
 session.commit()
 session.query(Parameter).all()
-
-            
-        
-
-        

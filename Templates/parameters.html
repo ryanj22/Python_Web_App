@@ -1,74 +1,31 @@
 ﻿<html>
+<link rel="stylesheet" type="text/css" href="/static/styles.css">
+<script type="text/javascript" src="/static/jscripts.js"></script>
+
 <head>
-
-<style>
-#paramtable {
-    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
-    width: 100%;
-	table-layout: fixed;
-	border-collapse: collapse;
-}
-
-#paramtable tbody {
-	display:block;
-	width: 100%;
-	height: 300px;
-	overflow-y: scroll;
-}
-
-#paramtable thead tr{ 
-	display: block;
-}
-
-#paramtable tbody tr{ 
-	display: block;
-}
-
-#paramtable thead {
-  background: #004bbc;
-  color:white;
-}
-
-#paramtable th, #paramtable td {
-  padding: 5px;
-  text-align: left;
-  width: 250px;
-}
-
-#paramtable tr:nth-child(even){background-color: #f2f2f2;}
-
-#paramtable tr:hover {background-color: #ddd;}
-
-
-
-</style>
 </head>
 
 <body>
-
-<div ng-app="">
-  <p>Name: <input type="text" ng-model="name"></p>
-  <p ng-bind="name"></p>
-</div>
-
+<textarea id="myTextarea" cols="25" rows="1" readonly></textarea>
 <table id="paramtable">
   <thead>
 	  <tr>
-		<th>Block Name</th>
-		<th>Parameter Name</th>
-		<th>Parameter Value</th>
+		<th><input type="text" id="myInput0" onkeyup="Filter()" placeholder="Block Name.."></th>
+		<th><input type="text" id="myInput1" onkeyup="Filter()" placeholder="Parameter Name.."></th>
+		<th><input type="text" id="myInput2" onkeyup="Filter()" placeholder="Parameter Value.."></th>
 	  </tr>
   </thead>
   <tbody>
 	  {% for i in parameters %}
-	  <tr>
+	  <tr onclick="getID(this)">
 		<td>{{i.blockname}}</td>
 		<td>{{i.paramname}}</td>
 		<td>{{i.paramvalue}}</td>
-	  </tr>{% endfor %}
+    <td><input type="checkbox" name="checkr" value="Get Checkbox status"></td>
+  </tr>{% endfor %}
   </tbody>
 </table>
+<input type="button" id="btnStatus" value="Get Checkbox status">
 
-<script src="https://ajax.googleapis/ajax/libs/angular/1.4.9/angular.min.js"></script>
 </body>
 </html>
